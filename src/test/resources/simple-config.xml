@@ -1,0 +1,12 @@
+<configuration>
+    <object id="id1" type="com.fndef.plug.Test" >
+        <constructor ref="id2" />
+    </object>
+
+    <object id="id3" ref="id1" >
+    </object>
+
+    <object id="id2" type="java.lang.String" >
+        <constructor value="yes" />
+    </object>
+</configuration>

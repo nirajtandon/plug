@@ -26,10 +26,10 @@ garbage collection. Their only purpose is to satisfy managed component dependenc
 		<constructor value="hello" />
 		<constructor factory-ref="f1" />
 		<constructor ref="id1" />
-		<invoke name="someName1" value="val1" />
-		<invoke name="someName2" ref="id1" />
-		<invoke name="someName3" factory-ref="f1" />
-		<invoke name="someNameLikeInit" />
+		<invoke method="someName1" value="val1" />
+		<invoke method="someName2" ref="id1" />
+		<invoke method="someName3" factory-ref="f1" />
+		<invoke method="someNameLikeInit" />
 	</object>
 	
 	
@@ -53,10 +53,10 @@ to satisfy dependencies.
 		<constructor value="hello" />
 		<constructor factory-ref="f1" />
 		<constructor ref="id1" />
-		<invoke name="someName1" value="val1" />
-		<invoke name="someName2" ref="id1" />
-		<invoke name="someName3" factory-ref="f1" />
-		<invoke name="someNameLikeInit" />
+		<invoke method="someName1" value="val1" />
+		<invoke method="someName2" ref="id1" />
+		<invoke method="someName3" factory-ref="f1" />
+		<invoke method="someNameLikeInit" />
 	</factory>
 	
 ## Managed Components
@@ -75,11 +75,11 @@ the container during the container initialization.
 		<constructor factory-ref="f1" />
 		<constructor ref="id1" />
 		<constructor component-ref="id1" />
-		<invoke name="someName1" value="val1" />
-		<invoke name="someName2" ref="id1" />
-		<invoke name="someName3" factory-ref="f1" />
-		<invoke name="someName2" component-ref="id1" />
-		<invoke name="someNameLikeInit" />
+		<invoke method="someName1" value="val1" />
+		<invoke method="someName2" ref="id1" />
+		<invoke method="someName3" factory-ref="f1" />
+		<invoke method="someName2" component-ref="id1" />
+		<invoke method="someNameLikeInit" />
 		<shutDown method="cleanup" />
 	</component>
 
@@ -99,11 +99,11 @@ a shared resource that has a lifecycle associated with it.
 		<constructor factory-ref="f1" />
 		<constructor ref="id1" />
 		<constructor component-ref="id1" />
-		<invoke name="someName1" value="val1" />
-		<invoke name="someName2" ref="id1" />
-		<invoke name="someName3" factory-ref="f1" />
-		<invoke name="someName2" component-ref="id1" />
-		<invoke name="someNameLikeInit" />
+		<invoke method="someName1" value="val1" />
+		<invoke method="someName2" ref="id1" />
+		<invoke method="someName3" factory-ref="f1" />
+		<invoke method="someName2" component-ref="id1" />
+		<invoke method="someNameLikeInit" />
 		<startUp method="start" />
 		<shutDown method="stop" />
 	</control>
