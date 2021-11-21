@@ -106,7 +106,9 @@ public class ResolvableOrder implements XmlConfigVisitor {
 
         private void resolve(List<IdRef> ids) {
             for (IdRef id : ids) {
-                resolve(id);
+                if (!resolved.contains(id)) {
+                    resolve(id);
+                }
             }
         }
 
@@ -122,11 +124,11 @@ public class ResolvableOrder implements XmlConfigVisitor {
         }
 
         public List<IdRef> get() {
-            List<IdRef> ids = new ArrayList<>();
+            List<IdRef> idOdr = new ArrayList<>();
             for (int k = order.size() -1; k >=0; k-- ) {
-                ids.add(order.get(k));
+                idOdr.add(order.get(k));
             }
-            return ids;
+            return idOdr;
         }
     }
 }

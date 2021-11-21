@@ -20,7 +20,7 @@ public class ValidationAggregate implements ValidationRule<XmlConfig> {
         this(new Errors());
     }
 
-    public static ValidationAggregate of(ValidationRule... validators) {
+    public static ValidationAggregate of(ValidationRule<XmlConfig>... validators) {
         Objects.requireNonNull(validators, "No validator specified");
 
         ValidationAggregate aggregate = new ValidationAggregate();

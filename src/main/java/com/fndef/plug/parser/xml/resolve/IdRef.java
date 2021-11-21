@@ -30,4 +30,23 @@ class IdRef {
     public TagType getType() {
         return type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof IdRef) {
+            IdRef other = (IdRef) o;
+            return getId().equals(other.id);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "IdRef ["+id+"] and ref count ["+refs.size()+"]";
+    }
 }

@@ -1,5 +1,6 @@
 package com.fndef.plug.parser.xml.resolve;
 
+import com.fndef.plug.parser.xml.TagType;
 import com.fndef.plug.parser.xml.resolve.provider.Provider;
 
 public class Constructor implements Resolvable {
@@ -11,5 +12,10 @@ public class Constructor implements Resolvable {
     @Override
     public Object resolve() {
         return provider.get();
+    }
+
+    @Override
+    public TagType type() {
+        return TagType.CONSTRUCTOR;
     }
 }

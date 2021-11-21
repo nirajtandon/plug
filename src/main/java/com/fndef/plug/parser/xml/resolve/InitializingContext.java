@@ -90,7 +90,6 @@ public class InitializingContext implements Context {
                 managedComponents.put(id.getId(), managed);
             }
         }
-        System.out.println("No of managed components ["+managedComponents.size()+"]");
         return new ManagedContext(managedComponents);
     }
 }

@@ -15,6 +15,7 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
     private final XmlValidationRule constructorAttributesCheck = new ConstructorAttributesCheck();
     private final XmlValidationRule constructorInvalidAttrCheck = new ConstructorInvalidAttributesCheck();
     private final XmlValidationRule noAttributesCheck = new NoAttributesCheck();
+    private final ValidationAggregate incompatibleChecks = ValidationAggregate.of(new DupIdCheck(), new IncompatibleAttributesCheck());
 
     private Errors errors;
 
@@ -33,6 +34,7 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
                 .nextValidation(validAttributeCheck)
                 .nextValidation(tagSupportsAttributeCheck)
                 .nextValidation(factoryMethodCheck)
+                .nextValidation(incompatibleChecks)
                 .validate(config)
                 .merge(errors);
 
@@ -45,6 +47,7 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
                 .nextValidation(tagNestingCheck)
                 .nextValidation(validAttributeCheck)
                 .nextValidation(tagSupportsAttributeCheck)
+                .nextValidation(incompatibleChecks)
                 .validate(config)
                 .merge(errors);
     }
@@ -55,6 +58,7 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
                 .nextValidation(tagNestingCheck)
                 .nextValidation(validAttributeCheck)
                 .nextValidation(tagSupportsAttributeCheck)
+                .nextValidation(incompatibleChecks)
                 .validate(config)
                 .merge(errors);
     }
@@ -62,9 +66,10 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
     @Override
     public void controlConfig(XmlConfig config) {
         errors = ValidationAggregate.of(requiredIdAttributeCheck)
-                .nextValidation(new TagNestingCheck())
-                .nextValidation(new ValidAttributeCheck())
-                .nextValidation(new TagSupportsAttributeCheck())
+                .nextValidation(tagNestingCheck)
+                .nextValidation(validAttributeCheck)
+                .nextValidation(tagSupportsAttributeCheck)
+                .nextValidation(incompatibleChecks)
                 .validate(config)
                 .merge(errors);
     }
@@ -75,6 +80,7 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
                 .nextValidation(validAttributeCheck)
                 .nextValidation(tagSupportsAttributeCheck)
                 .nextValidation(requiredMethodAttributeCheck)
+                .nextValidation(incompatibleChecks)
                 .validate(config)
                 .merge(errors);
     }
@@ -86,6 +92,7 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
                 .nextValidation(tagSupportsAttributeCheck)
                 .nextValidation(constructorAttributesCheck)
                 .nextValidation(constructorInvalidAttrCheck)
+                .nextValidation(incompatibleChecks)
                 .validate(config)
                 .merge(errors);
     }
@@ -95,6 +102,7 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
         errors = ValidationAggregate.of(noAttributesCheck)
                 .nextValidation(tagNestingCheck)
                 .nextValidation(tagSupportsAttributeCheck)
+                .nextValidation(incompatibleChecks)
                 .validate(config)
                 .merge(errors);
     }

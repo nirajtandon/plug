@@ -10,7 +10,7 @@ public class ConfigurationTest {
                 .configSource(getClass().getClassLoader().getResourceAsStream("simple-config.xml"))
                 .getContext();
 
-        // Test t = c.getById("id1", Test.class);
-        // System.out.println(t.get());
+        Test t = c.getById("c2", Test.class);
+        System.out.println(t.get());
     }
 }

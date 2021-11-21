@@ -1,12 +1,33 @@
 <configuration>
+    <object id="id10" type="java.lang.String" >
+        <constructor value="ok" />
+    </object>
+
+    <object id="id4" ref="id3" />
+
     <object id="id1" type="com.fndef.plug.Test" >
         <constructor ref="id2" />
+    </object>
+
+    <object id="id5" ref="id3" />
+
+    <object id="id11" type="java.lang.String" >
+        <constructor value="ok-1" />
     </object>
 
     <object id="id3" ref="id1" >
     </object>
 
+    <component id="c2" type="com.fndef.plug.Test">
+        <constructor ref="id15" />
+    </component>
+
+    <object id="id15" ref="id10" />
+
     <object id="id2" type="java.lang.String" >
         <constructor value="yes" />
     </object>
+    <component id="c1" type="com.fndef.plug.Test">
+        <constructor ref="id11" />
+    </component>
 </configuration>

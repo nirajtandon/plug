@@ -3,12 +3,11 @@ package com.fndef.plug.parser.xml.resolve;
 import com.fndef.plug.parser.xml.TagType;
 import com.fndef.plug.parser.xml.resolve.provider.Provider;
 
-public class Obj implements Resolvable {
-
+public class Component implements Resolvable {
     private final String id;
     private final Provider provider;
 
-    public Obj(String id, Provider provider) {
+    public Component(String id, Provider provider) {
         this.id = id;
         this.provider = provider;
     }
@@ -20,10 +19,6 @@ public class Obj implements Resolvable {
 
     @Override
     public TagType type() {
-        return TagType.OBJECT;
-    }
-
-    public String toString() {
-        return "Object [id="+id+"]";
+        return TagType.COMPONENT;
     }
 }

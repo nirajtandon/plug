@@ -2,6 +2,7 @@ package com.fndef.plug.parser.xml.resolve;
 
 import com.fndef.plug.Context;
 import com.fndef.plug.parser.xml.AttributeType;
+import com.fndef.plug.parser.xml.TagType;
 import com.fndef.plug.parser.xml.XmlConfig;
 import com.fndef.plug.parser.xml.XmlConfigVisitor;
 import com.fndef.plug.parser.xml.resolve.provider.InstanceMethodFactoryProvider;
@@ -12,6 +13,7 @@ import com.fndef.plug.parser.xml.resolve.provider.TypeFactoryProvider;
 import com.fndef.plug.parser.xml.resolve.provider.ValueProvider;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -49,10 +51,7 @@ public class ConfigResolver implements XmlConfigVisitor {
             context.register(id, new FactoryMethod(id, new InstanceMethodFactoryProvider(refId, method, context)));
         }  else {
             String type = config.getAttributes().get(AttributeType.TYPE.getAttrName());
-            List<Resolvable> constructors = new ArrayList<>();
-            while(inprogress.peek() instanceof Constructor) {
-                constructors.add(inprogress.poll());
-            }
+            List<Resolvable> constructors = drain(TagType.CONSTRUCTOR);
             context.register(id, new FactoryMethod(id, new TypeFactoryProvider(type, constructors)));
         }
     }
@@ -66,10 +65,7 @@ public class ConfigResolver implements XmlConfigVisitor {
             context.register(id, new Obj(id, new RefProvider(refId, context)));
         } else if (hasType.test(config)) {
             String type = config.getAttributes().get(AttributeType.TYPE.getAttrName());
-            List<Resolvable> constructors = new ArrayList<>();
-            while(inprogress.peek() instanceof Constructor) {
-                constructors.add(inprogress.poll());
-            }
+            List<Resolvable> constructors = drain(TagType.CONSTRUCTOR);
             context.register(id, new Obj(id, new ObjProvider(new TypeFactoryProvider(type, constructors))));
         } else {
             throw new IllegalArgumentException("Unsupported object arg");
@@ -78,12 +74,18 @@ public class ConfigResolver implements XmlConfigVisitor {
 
     @Override
     public void componentConfig(XmlConfig config) {
-
+        final String id = config.getAttributes().get(AttributeType.ID.getAttrName());
+        String type = config.getAttributes().get(AttributeType.TYPE.getAttrName());
+        List<Resolvable> constructors = drain(TagType.CONSTRUCTOR);
+        context.register(id, new Component(id, new TypeFactoryProvider(type, constructors)));
     }
 
     @Override
     public void controlConfig(XmlConfig config) {
-
+        final String id = config.getAttributes().get(AttributeType.ID.getAttrName());
+        String type = config.getAttributes().get(AttributeType.TYPE.getAttrName());
+        List<Resolvable> constructors = drain(TagType.CONSTRUCTOR);
+        context.register(id, new Component(id, new TypeFactoryProvider(type, constructors)));
     }
 
     @Override
@@ -107,5 +109,14 @@ public class ConfigResolver implements XmlConfigVisitor {
 
     @Override
     public void configurationConfig(XmlConfig config) {
+    }
+
+    private List<Resolvable> drain(TagType type) {
+        List<Resolvable> r = new ArrayList<>();
+        Iterator<Resolvable> it = new DependencyIterator(inprogress, type);
+        while ((it.hasNext())) {
+            r.add(it.next());
+        }
+        return r;
     }
 }
