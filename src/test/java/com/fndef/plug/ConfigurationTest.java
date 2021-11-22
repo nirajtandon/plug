@@ -6,11 +6,14 @@ public class ConfigurationTest {
     }
 
     private void run() {
+
         Context c = new ContextBuilder.WithOptions(ConfigFormat.XML)
                 .configSource(getClass().getClassLoader().getResourceAsStream("simple-config.xml"))
                 .getContext();
 
         Test t = c.getById("c2", Test.class);
         System.out.println(t.get());
+        System.out.println(t);
+
     }
 }

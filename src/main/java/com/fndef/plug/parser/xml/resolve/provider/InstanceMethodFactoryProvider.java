@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
-public class InstanceMethodFactoryProvider implements Provider {
+public class InstanceMethodFactoryProvider implements Provider<Object> {
 
     private final String refId;
     private final String methodName;

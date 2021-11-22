@@ -8,4 +8,5 @@ public interface XmlConfigVisitor {
     void constructorConfig(XmlConfig config);
     void invokeConfig(XmlConfig config);
     void configurationConfig(XmlConfig config);
+    void paramConfig(XmlConfig config);
 }

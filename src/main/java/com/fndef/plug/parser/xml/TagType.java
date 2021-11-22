@@ -4,6 +4,7 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.fndef.plug.parser.xml.AttributeType.CONVERTER;
 import static com.fndef.plug.parser.xml.AttributeType.FACTORY_REF;
 import static com.fndef.plug.parser.xml.AttributeType.ID;
 import static com.fndef.plug.parser.xml.AttributeType.METHOD;
@@ -75,24 +76,13 @@ public enum TagType {
 
         @Override
         public Set<AttributeType> supportedAttributes() {
-            return EnumSet.of(VALUE, FACTORY_REF, REF);
+            return EnumSet.of(VALUE, FACTORY_REF, REF, CONVERTER);
         }
     },
     INVOKE("invoke", false,  "Invocation entry") {
         @Override
         public Set<TagType> supportedNestedTag() {
-            return new HashSet<>();
-        }
-
-        @Override
-        public Set<AttributeType> supportedAttributes() {
-            return EnumSet.of(METHOD, VALUE, REF, FACTORY_REF);
-        }
-    },
-    SHUTDOWN("shutdown", false, "shutdown hook") {
-        @Override
-        public Set<TagType> supportedNestedTag() {
-            return new HashSet<>();
+            return EnumSet.of(PARAM);
         }
 
         @Override
@@ -100,7 +90,18 @@ public enum TagType {
             return EnumSet.of(METHOD);
         }
     },
-    STARTUP("startup", false, "Startup initialization") {
+    PARAM("param", false, "Exact value") {
+        @Override
+        public Set<TagType> supportedNestedTag() {
+            return new HashSet<>();
+        }
+
+        @Override
+        public Set<AttributeType> supportedAttributes() {
+            return EnumSet.of(VALUE, FACTORY_REF, REF, CONVERTER);
+        }
+    },
+    SHUTDOWN("shutdown", false, "shutdown hook") {
         @Override
         public Set<TagType> supportedNestedTag() {
             return new HashSet<>();

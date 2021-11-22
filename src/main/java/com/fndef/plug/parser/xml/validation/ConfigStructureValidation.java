@@ -107,6 +107,14 @@ public class ConfigStructureValidation implements ValidatingConfigVisitor {
                 .merge(errors);
     }
 
+    @Override
+    public void paramConfig(XmlConfig config) {
+        errors = ValidationAggregate.of(tagNestingCheck)
+                .nextValidation(tagSupportsAttributeCheck)
+                .validate(config)
+                .merge(errors);
+    }
+
     public Errors getErrors() {
         System.out.println("Config structure validation has ["+errors.getErrors().size()+"] errors");
         System.out.println("Errors :");

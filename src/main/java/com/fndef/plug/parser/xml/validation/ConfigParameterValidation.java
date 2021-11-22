@@ -62,4 +62,9 @@ public class ConfigParameterValidation implements ValidatingConfigVisitor {
     public void configurationConfig(XmlConfig config) {
         // no checks required - structure already validated
     }
+
+    @Override
+    public void paramConfig(XmlConfig config) {
+
+    }
 }

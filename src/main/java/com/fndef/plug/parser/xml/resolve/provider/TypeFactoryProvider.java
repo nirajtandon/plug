@@ -1,5 +1,6 @@
 package com.fndef.plug.parser.xml.resolve.provider;
 
+import com.fndef.plug.common.PrimitiveMapping;
 import com.fndef.plug.parser.xml.resolve.Resolvable;
 
 import java.lang.reflect.Constructor;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TypeFactoryProvider implements Provider {
+public class TypeFactoryProvider implements Provider<Object> {
 
     private final String clazz;
     private List<Resolvable> constructors;
@@ -27,18 +28,17 @@ public class TypeFactoryProvider implements Provider {
             Constructor[] constructors = c.getConstructors();
             for(Constructor con : constructors) {
                 if (matches(con)) {
-                    System.out.println("constructor matches");
                     con.setAccessible(true);
                     return con.newInstance(params.toArray());
                 }
             }
         } catch (ClassNotFoundException cnf) {
-            throw new IllegalArgumentException("Factory class ["+clazz+"] not found", cnf);
+            throw new IllegalArgumentException("Class ["+clazz+"] not found", cnf);
         }
         catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | InstantiationException ex) {
-            throw new IllegalArgumentException("Factory class ["+clazz+"] failed instantiation using params ["+params+"]", ex);
+            throw new IllegalArgumentException("Class ["+clazz+"] failed instantiation using params ["+params+"]", ex);
         }
-        throw new IllegalArgumentException("Factory class ["+clazz+"] could not be instantiated");
+        throw new IllegalArgumentException("No matching constructor found for class ["+clazz+"]");
     }
 
     private boolean matches(Constructor constructor) {
@@ -46,8 +46,9 @@ public class TypeFactoryProvider implements Provider {
         if (constructor.getParameterCount() == expectedCount) {
             Class[] paramTypes = constructor.getParameterTypes();
             for (int k = 0; k < paramTypes.length; k++) {
-                if (! paramTypes[k].isInstance(params.get(k))) {
-                    System.out.println("constructor doesn't match");
+                Class pt = paramTypes[k];
+                Object param = params.get(k);
+                if (!pt.isInstance(param) && !PrimitiveMapping.isAssignable(pt, param.getClass())) {
                     return false;
                 }
             }
@@ -60,7 +61,6 @@ public class TypeFactoryProvider implements Provider {
         for (Resolvable r : constructors) {
             Object o = r.resolve();
             Objects.requireNonNull(o, "Parameter not resolved while constructing factory type ["+clazz+"]");
-            System.out.println("resolving params - "+o);
             params.add(o);
         }
     }

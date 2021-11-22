@@ -63,6 +63,11 @@ public class ResolvableOrder implements XmlConfigVisitor {
         // no config to resolve
     }
 
+    @Override
+    public void paramConfig(XmlConfig config) {
+
+    }
+
     private void resolveIdRefs(XmlConfig config) {
         IdRef idRef = new IdRef(getAttrVal(ID, config), config.getTagType());
         List<String> refs = collectRefs(config);

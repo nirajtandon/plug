@@ -6,7 +6,8 @@ public enum AttributeType {
     FACTORY_REF("factory-ref", "Reference to a factory Id"),
     TYPE("type", "Class or a type"),
     METHOD("method", "Method name"),
-    VALUE("value", "Static value");
+    VALUE("value", "Static value"),
+    CONVERTER("converter", "Value conversion");
 
     private String attrName;
     private String description;

@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.function.BiPredicate;
 
-public class StaticMethodFactoryProvider implements Provider {
+public class StaticMethodFactoryProvider implements Provider<Object> {
     private String type;
     private String methodName;
 

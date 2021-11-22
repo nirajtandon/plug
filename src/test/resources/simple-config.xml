@@ -6,6 +6,7 @@
     <object id="id4" ref="id3" />
 
     <object id="id1" type="com.fndef.plug.Test" >
+        <constructor value="7" converter="int" />
         <constructor ref="id2" />
     </object>
 
@@ -19,7 +20,13 @@
     </object>
 
     <component id="c2" type="com.fndef.plug.Test">
+        <constructor value="5" converter="int" />
         <constructor ref="id15" />
+        <invoke method="init" />
+        <invoke method="init" >
+            <param value="val-is-ok" />
+            <param ref="id11" />
+        </invoke>
     </component>
 
     <object id="id15" ref="id10" />
@@ -28,6 +35,7 @@
         <constructor value="yes" />
     </object>
     <component id="c1" type="com.fndef.plug.Test">
+        <constructor value="6" converter="int" />
         <constructor ref="id11" />
     </component>
 </configuration>

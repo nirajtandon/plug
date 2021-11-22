@@ -52,7 +52,7 @@ public class RefIdValidator implements ValidatingConfigVisitor {
 
     @Override
     public void constructorConfig(XmlConfig config) {
-        resolveConfig(config); // this will not have ref / factory ref - use nested tags
+        resolveConfig(config);
     }
 
     @Override
@@ -63,6 +63,11 @@ public class RefIdValidator implements ValidatingConfigVisitor {
     @Override
     public void configurationConfig(XmlConfig config) {
         // this will not have ref
+    }
+
+    @Override
+    public void paramConfig(XmlConfig config) {
+
     }
 
     private void resolveConfig(XmlConfig config) {

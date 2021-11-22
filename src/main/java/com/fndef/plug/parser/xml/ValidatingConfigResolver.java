@@ -27,7 +27,6 @@ public class ValidatingConfigResolver {
         Objects.requireNonNull(configSet, "Config is null");
         this.configOptions = options;
         this.configSet = configSet;
-        System.out.println("Config is available? "+(configSet != null));
     }
 
     public ValidatingConfigResolver validateConfigStructure() {

@@ -72,6 +72,10 @@ public class XmlConfig {
             case CONSTRUCTOR:
                 visitor.constructorConfig(this);
                 break;
+            case PARAM:
+                visitor.paramConfig(this);
+                break;
+            case SHUTDOWN:
             default:
                 throw new IllegalArgumentException("Unsupported config type");
         }
