@@ -1,5 +1,9 @@
 package com.fndef.plug.parser.xml.resolve;
 
+import com.fndef.plug.Context;
+
+import java.util.Objects;
+
 public class ValueConversion {
 
     private ValueConversion() {}
@@ -20,13 +24,16 @@ public class ValueConversion {
         return false;
     }
 
-    public static ValueConverter getConverter(String name) {
+    public static ValueConverter getConverter(String name, Context context) {
+        Objects.requireNonNull(name, "Value converter is null");
         for (ProvidedConversionType p : ProvidedConversionType.values()) {
             if (p.name.equals(name)) {
                 return p.converter;
             }
         }
-        return createConverter(name);
+
+        Objects.requireNonNull(context, "Context is required for referenced value converter");
+        return new RefValueConverter(name, context);
     }
 
     private static boolean converterType(String name) {
@@ -35,23 +42,6 @@ public class ValueConversion {
             return ValueConverter.class.isAssignableFrom(c);
         } catch (ClassNotFoundException cnf) {
             throw new IllegalArgumentException("Class ["+name+"] not found", cnf);
-        }
-    }
-
-    private static ValueConverter createConverter(String name) {
-        try {
-            if (converterType(name)) {
-                Class c = Class.forName(name);
-                Object o = c.newInstance();
-                if (ValueConverter.class.isInstance(o)) {
-                    return ValueConverter.class.cast(o);
-                }
-            }
-            throw new IllegalArgumentException("Not a converter class ["+name+"]");
-        } catch (ClassNotFoundException cnf) {
-            throw new IllegalArgumentException("Class ["+name+"] not found", cnf);
-        } catch (InstantiationException | IllegalAccessException ie) {
-            throw new IllegalArgumentException("Converter ["+name+"] instantiation failed", ie);
         }
     }
 

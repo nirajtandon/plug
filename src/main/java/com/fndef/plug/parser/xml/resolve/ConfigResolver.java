@@ -140,7 +140,7 @@ public class ConfigResolver implements XmlConfigVisitor {
     private ValueConverter valueConverter(XmlConfig config) {
         String converter = config.getAttributes().get(AttributeType.CONVERTER.getAttrName());
         return Optional.ofNullable(converter)
-                .map(c -> ValueConversion.getConverter(c))
+                .map(c -> ValueConversion.getConverter(c, context))
                 .orElse(ValueConversion.ProvidedConversionType.NONE.getConverter());
     }
 
